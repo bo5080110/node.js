@@ -1,0 +1,21 @@
+使用步骤：
+    1.创建项目，并且添加package.json
+    2.创建一个文件夹 public
+    3.在public下创建index.html
+    4.在项目根目录下创建一个js文件
+    5.下载安装express
+        cnpm i express --save
+    6.引入express
+        var express = require("express");
+    7.在js中编写如下代码
+        var express = require("express");
+
+        //创建一个应用对象
+        //app代表整个服务器
+        var app = express();
+
+        //配置静态资源
+        app.use(express.static("public"));
+
+        //监听3000端口并启动服务器
+        app.listen(3000);

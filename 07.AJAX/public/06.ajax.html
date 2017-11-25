@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="javascripts/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+
+			$("#btn01").click(function () {
+
+				$.getJSON("http://api.douban.com/v2/movie/in_theaters?callback=?",function (data) {
+
+					//电影的详情
+					var subjects = data.subjects;
+
+					for(var i=0 ; i<subjects.length ; i++){
+
+						//subjects[i].images.large
+						$("#list").append("<li>"+
+								subjects[i].title+ "<br>"+
+								"<img src='"+subjects[i].images.small+"' />"+
+							"</li>");
+					}
+
+
+
+				});
+
+			});
+
+		});
+
+	</script>
+</head>
+<body>
+
+<button id="btn01">点我一下</button>
+
+<ul id="list">
+
+
+</ul>
+
+</body>
+</html>

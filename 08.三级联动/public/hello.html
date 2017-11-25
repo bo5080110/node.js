@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+	<!--
+		art-template
+			- 前端模板，他可以为我们提供一个带有变量的网页模板，
+				我们只需要将变量传递进模板，它就可以自动的为我们生成一段HTML页面（页面片段）
+			- 使用步骤：
+				1.引入template-web.js
+				2.引入jQuery（可选）
+				3.创建模板
+					- 模板需要保存到当前页面的script标签中
+				4.渲染模板，并将渲染后的结果插入到页面中
+	-->
+
+	<script type="text/javascript" src="template-web.js"></script>
+	<script type="text/javascript" src="jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+
+		$(function () {
+			$("#btn01").click(function () {
+
+				//通过template()函数来渲染模板
+				//它需要两个参数，第一个，要渲染的模板的id 第二个 要传递进模板的变量
+				//和res.render()一样
+				var html = template("temp02" , {username:"猪八戒" , list:["刘备","关羽","张飞","赵云"]});
+
+				//将渲染后的结果插入到页面中
+				$("#box1").append(html);
+
+			});
+		});
+
+	</script>
+
+</head>
+<body>
+
+<button id="btn01">点我一下</button>
+
+<div id="box1"></div>
+
+<!--
+	创建一个script标签用来保存模板
+	语法和EJS是一样的
+		<%= %>
+		<%- %>
+		<%  %>
+-->
+<script id="temp01" type="text/html">
+
+	<h1>Hello Art-Template</h1>
+
+	<h2>Hello 大师兄</h2>
+
+	<h3>Hello <%=username%></h3>
+
+</script>
+
+
+<!--
+	<%= %>
+	<%- %>
+	<%  %>
+
+	art-template
+		{{值}} 可以将值在页面中输出，作用和<%= %>一样，会自动进行转义
+		{{@值}} 将值在页面中输出，作用和<%- %>一样，不会进行自动转义
+
+		判断语句
+			{{if value}} ... {{/if}}
+			{{if v1}} ... {{else if v2}} ... {{/if}}
+
+		循环语句
+			{{each target}}
+				{{$index}} {{$value}}
+			{{/each}}
+
+-->
+<script id="temp02" type="text/html">
+
+	<ul>
+		{{each list}}
+			<li>{{$index}} - {{$value}}</li>
+		{{/each}}
+	</ul>
+
+
+
+	<h1>Hello {{username}}</h1>
+	<h1>Hello {{@username}}</h1>
+
+	{{if username=="孙悟空"}}
+		<h2>大师兄好</h2>
+	{{else if username == "猪八戒"}}
+		<h2>二师兄好</h2>
+	{{/if}}
+
+</script>
+
+</body>
+</html>

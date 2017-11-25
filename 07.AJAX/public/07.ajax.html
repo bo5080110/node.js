@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+<button id="btn01">点我一下</button>
+
+<script type="text/javascript">
+
+	document.getElementById("btn01").onclick = function () {
+
+		/*
+			JSONP的不足：
+				1.JSONP不是官方的规范
+				2.JSONP只支持get请求
+
+			CORS
+		 		Cross-Origin Resource Sharing 跨域资源共享
+		 		- CORS是官方的跨域解决方案
+		 		- 它同时支持get和post请求
+		 		- 使用CORS客户端不用做任何的改变，直接发送AJAX请求即可，但是需要在服务器端来做简单的处理
+		 		- CORS实际上就是在服务器中设置一个响应头，这个响应头可以用来告诉浏览器，服务器允许跨域请求
+		 				Access-Control-Allow-Origin:地址
+		 */
+
+
+		var xhr = new XMLHttpRequest();
+		//xhr.open("get","/helloAJAX5");
+		xhr.open("get","https://free-api.heweather.com/s6/weather/forecast?key=8971dbd46ef44708a62f0ce8cf6ff012&location=beijing");
+		xhr.send();
+		xhr.onreadystatechange = function () {
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var obj = JSON.parse(xhr.responseText);
+				console.log(obj);
+			}
+		};
+
+
+
+
+
+	};
+
+
+
+</script>
+
+
+
+</body>
+</html>

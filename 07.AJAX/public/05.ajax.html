@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+<button id="btn01">点我一下</button>
+
+<script type="text/javascript">
+
+	document.getElementById("btn01").onclick = function () {
+
+		/*
+			无法通过AJAX发送违反同源策略的请求
+				同源策略指协议、域名、端口号都相同的地址
+			所以默认情况下无法通过AJAX发送跨域请求
+		 */
+
+		/*var xhr = new XMLHttpRequest();
+		//xhr.open("get","/helloAJAX5");
+		//xhr.open("get","http://127.0.0.1:3000/helloAJAX5");
+		//xhr.open("get","http://localhost:3000/helloAJAX5");
+		xhr.open("get","http://api.douban.com/v2/movie/in_theaters");
+		xhr.send();
+		xhr.onreadystatechange = function () {
+			if(xhr.readyState == 4 && xhr.status == 200){
+				alert(xhr.responseText);
+			}
+		};*/
+
+
+		/*
+		 http://localhost:3000/helloAJAX5
+		 
+			JSONP(JSON with Padding)
+				- JSONP是一个非官方的跨域解决方案
+				- JSONP不是AJAX
+				- HTML中有一些标签天生就具有跨域的能力
+					img link iframe script
+				- JSONP就是利用script标签的跨域能力，来发送跨域请求的
+			
+		 */
+
+		//创建一个script标签
+		var script = document.createElement("script");
+		//设置src属性
+		//script.src = "http://localhost:3000/helloAJAX5?callback=abc";
+		script.src = "http://api.douban.com/v2/movie/in_theaters?callback=abc";
+		//将script标签插入到body中
+		document.body.appendChild(script);
+
+
+	};
+
+
+	function abc(data) {
+		console.log(data);
+	}
+
+</script>
+
+<!--<script type="text/javascript" src="http://localhost:3000/helloAJAX5"></script>-->
+
+
+</body>
+</html>

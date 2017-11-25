@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="/jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="/template-web.js"></script>
+	<script type="text/javascript">
+
+		/*
+
+		 */
+
+		//页面加载完毕，立即加载省份的信息
+		$(function () {
+
+			//发送请求加载省份信息
+			//http://127.0.0.1:3000/getSheng
+			$.get("/getSheng",function (data) {
+				//渲染模板
+				var html = template("temp01",{data:data,name:"sheng"});
+				//将渲染后的模板添加到select中
+				$("#sheng").append(html);
+			});
+
+
+			//当省份发生变化，加载城市的信息
+			$("#sheng").change(function () {
+
+				//删除之前的城市的数据 删除之前的区县信息
+				//$("#di").empty();
+				$("#di").children(":not(:first)").remove();
+				$("#xian").children(":not(:first)").remove();
+
+				//http://127.0.0.1:3000/getDi?sheng=21
+				//获取当前选中的省份的id
+				var sheng = this.value;
+
+				//加载城市的信息
+				$.get("/getDi",{sheng:sheng},function(data){
+					$("#di").append(template("temp01",{data:data,name:"di"}));
+				});
+
+
+			});
+
+
+			//城市发生变化时加载区县信息
+			$("#di").change(function(){
+
+				//http://127.0.0.1:3000/getXian?sheng=21&di=02
+				//城市发生变化，清除区县的信息
+				$("#xian").children(":not(:first)").remove();
+
+				//当前选中的城市的id
+				var di = this.value;
+				//当前选中的省份的id
+				var sheng = $("#sheng").val();
+				//发送请求加载区县的信息
+				$.get("/getXian",{di:di,sheng:sheng},function(data){
+
+					$("#xian").append(template("temp01",{data:data,name:"xian"}));
+
+				});
+
+
+			});
+
+
+		});
+
+	</script>
+</head>
+<body>
+
+<!--创建一个模板-->
+<script id="temp01" type="text/html">
+{{if data.status == "ok"}}
+	{{each data.list}}
+		<option value="{{$value[name]}}">{{$value.name}}</option>
+	{{/each}}
+{{/if}}
+</script>
+
+<select id="sheng">
+	<option>请选择省份</option>
+</select> 省
+
+<select id="di">
+	<option>请选择市</option>
+</select> 市
+
+<select id="xian">
+	<option>请选择区(县)</option>
+</select> 区(县)
+
+
+</body>
+</html>

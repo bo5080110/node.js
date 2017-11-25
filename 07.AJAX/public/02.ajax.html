@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript">
+
+
+
+		/*
+			try{
+				//有可能出错的代码
+			}catch(e){
+				//如果try中的代码有错误，则会执行catch中的代码
+				//放出错以后的处理方式
+				//e 表示出现的错误信息
+			}finally{
+				//finally中的代码始终会执行
+			}
+		 */
+		//var a = 10;
+		/*try {
+			alert(a);
+		}catch (e){
+			a = 20;
+			alert(a);
+
+			//console.log(e);
+		}finally {
+			alert("finally中的代码始终会执行~~~");
+		}
+
+
+		console.log("hello");*/
+
+
+
+
+	</script>
+</head>
+<body>
+
+<button id="btn01">点我一下</button>
+
+<script type="text/javascript">
+
+	//自定义一个函数，用来获取xhr对象
+	function getXHR() {
+
+		try{
+			//主流浏览器都适用的方式
+			return new XMLHttpRequest();
+		}catch (e){
+			try{
+				//IE6支持的方式
+				return new ActiveXObject("Msxml2.XMLHTTP");
+			}catch (e){
+				try{
+					//IE5.5以下的
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				}catch (e){
+					alert("你是火星来的吧，你的浏览器不支持AJAX");
+				}
+
+			}
+
+		}
+
+
+	}
+
+	var btn01 = document.getElementById("btn01");
+	btn01.onclick = function () {
+
+		/*
+			在老版本的IE中，不支持 XMLHttpRequest ，所以在这些浏览器中调用会报错
+			 	IE6支持的方式
+					var xhr = new ActiveXObject("Msxml2.XMLHTTP")
+			 	IE5.5以下支持的方式
+					var xhr = new ActiveXObject("Microsoft.XMLHTTP")
+
+		 */
+
+		var xhr = getXHR();
+		xhr.open("get","/helloAJAX?t="+Math.random());
+		xhr.send();
+		xhr.onreadystatechange = function () {
+			if(xhr.readyState == 4 && xhr.status == 200){
+				alert(xhr.responseText);
+			}
+		};
+
+
+	};
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script type="text/javascript" src="javascripts/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+
+<button id="btn01">点我一下</button>
+
+<script type="text/javascript">
+
+	$("#btn01").click(function () {
+
+		/*
+			$.ajax()
+				- 该方法是jQuery底层的ajax实现，一般如果没有特殊需求不会使用
+				- 方法中需要一个配置对象作为参数：
+		 			type 请求方式，get或post
+		 			url  请求地址
+		 			data 请求参数（get请求的查询字符串，post请求的请求体）
+		 			dataType 期望服务器返回的数据类型
+		 				text 文本形式的响应数据
+		 				json json格式的响应数据，ajax会自动将其转换为js对象
+		 				如果不写，则ajax()会自动进行判断
+
+		 			success 请求发送成功以后的回调函数，响应数据会以实参的形式返回
+
+		 */
+
+		/*$.ajax({
+			type: "post",
+			url: "/helloAJAX2",
+			data: "username=John&password=Boston",
+			success: function(data){
+				alert( data );
+			}
+		});*/
+
+		/*
+			 $.get(url,[data],[fn],[type])
+			 	- 发送get请求
+			 $.post(url,[data],[fn],[type])
+			 	- 发送post请求
+
+			 	- 参数：
+			 		url 请求地址
+			 		data 请求参数（请求体）
+			 		fn 回调函数，请求发送成功以后的回调函数，响应数据会通过函数的实参返回
+		 			type 期望放回的数据类型，如果不指定会自动判断
+		 */
+		$.get("/helloAJAX4",{username:"abc",password:"123456"},function (data) {
+			alert(data);
+		},"json");
+
+	});
+
+
+</script>
+
+</body>
+</html>

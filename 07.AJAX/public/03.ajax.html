@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+
+<button id="btn01">加载XML格式的数据</button>
+<button id="btn02">加载JSON格式的数据</button>
+
+<script type="text/javascript">
+
+	var btn01 = document.getElementById("btn01");
+	btn01.onclick = function () {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("get","/helloAJAX3?t="+Math.random());
+		xhr.send();
+		xhr.onreadystatechange = function () {
+			if(xhr.readyState == 4 && xhr.status == 200){
+
+				//如果响应的数据是XML格式，这里必须通过responseXML来获取数据
+				//xhr.responseXML 会返回一个文档对象，代表整个XML文档，类似于DOM中的document
+				var xDoc = xhr.responseXML;
+
+				var nameEle = xDoc.getElementsByTagName("name")[0];
+
+				//<name>孙悟空</name>
+				var name = nameEle.firstChild.nodeValue;
+
+				var age = xDoc.getElementsByTagName("age")[0].firstChild.nodeValue;
+
+				alert(name + " , "+age);
+
+
+			}
+		};
+
+
+	};
+
+
+
+	var btn02 = document.getElementById("btn02");
+	btn02.onclick = function () {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open("get","/helloAJAX4?t="+Math.random());
+		xhr.send();
+		xhr.onreadystatechange = function () {
+			if(xhr.readyState == 4 && xhr.status == 200){
+				//JSON格式的数据需要通过responseText来接收
+				var json = xhr.responseText;
+
+				//将JSON转换为js对象
+				var obj = JSON.parse(json);
+
+				alert(obj.name);
+
+			}
+		};
+
+
+	};
+</script>
+
+</body>
+</html>

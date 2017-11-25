@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<h1>HELLO EJS</h1>
+
+<h2>你好 <%=username %></h2>
+<h2>你好 <%-username %></h2>
+
+<%
+
+console.log("HELLO EJS");
+
+var a = 20;
+
+
+%>
+
+
+<%=a %>
+
+<%
+    if(a == 20){
+%>
+
+<h2>你猜我会出现在网页中吗？</h2>
+
+<%
+    }
+%>
+
+<%
+    for(var i=0 ; i<20 ; i++){
+%>
+<h2>今天天气真不错~~</h2>
+<%
+    }
+%>
+
+
+
+</body>
+</html>

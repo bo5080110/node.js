@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<table width="60%" align="center" border="1">
+
+    <tr>
+        <td>姓名</td>
+        <td>性别</td>
+        <td>年龄</td>
+        <td>住址</td>
+        <td>操作</td>
+    </tr>
+
+    <%
+        for(var i=0 ; i<list.length ; i++){
+    %>
+        <tr>
+            <td><%=list[i].name%></td>
+            <td><%=list[i].gender%></td>
+            <td><%=list[i].age%></td>
+            <td><%=list[i].address%></td>
+            <td>
+                <a href="javascript:;">修改</a>
+                <a href="javascript:;">删除</a>
+            </td>
+        </tr>
+    <%
+        }
+    %>
+
+</table>
+
+</body>
+</html>
